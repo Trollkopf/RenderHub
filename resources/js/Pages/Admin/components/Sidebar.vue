@@ -1,0 +1,20 @@
+<script setup>
+import { Link } from '@inertiajs/vue3'
+import { defineProps } from 'vue'
+
+defineProps({
+    show: Boolean
+})
+</script>
+
+<template>
+    <nav :class="show ? 'block' : 'hidden md:block'" class="bg-gray-700 text-white w-64 md:w-48 p-4">
+        <ul>
+            <li><Link :href="route('admin.dashboard')" class="block p-2 hover:bg-gray-600">📊 Dashboard</Link></li>
+            <li><Link :href="route('admin.clients')" class="block p-2 hover:bg-gray-600">👥 Clientes</Link></li>
+            <li><Link :href="route('admin.works')" class="block p-2 hover:bg-gray-600">📂 Trabajos</Link></li>
+            <li><Link :href="route('admin.kanban')" class="block p-2 hover:bg-gray-600">🗂 Kanban</Link></li>
+            <li class="mt-4 border-t pt-2"><Link :href="route('logout')" method="post" class="block p-2 hover:bg-red-700">🚪 Cerrar Sesión</Link></li>
+        </ul>
+    </nav>
+</template>

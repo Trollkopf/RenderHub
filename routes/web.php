@@ -1,27 +1,48 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\WorkController;
+use App\Http\Middleware\RoleMiddleware;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
+// Página de inicio con Inertia.js
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('home');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
+// Rutas de autenticación de Laravel Breeze
 require __DIR__.'/auth.php';
+
+// Redirección después del login según el rol
+Route::get('/home', function () {
+    if (!Auth::check()) {
+        return redirect('/login');
+    }
+
+    return redirect(Auth::user()->role === 'admin' ? '/admin/dashboard' : '/dashboard');
+})->name('dashboard');
+
+// Rutas para Clientes (Panel de usuario)
+Route::middleware(['auth', RoleMiddleware::class . ':cliente'])->group(function () {
+    Route::get('/dashboard', [ClientController::class, 'dashboard'])->name('client.dashboard');
+    Route::get('/perfil', [ClientController::class, 'editProfile'])->name('client.profile');
+    Route::put('/perfil', [ClientController::class, 'updateProfile'])->name('client.profile.update');
+    Route::get('/trabajos', [WorkController::class, 'index'])->name('client.works');
+    Route::get('/trabajos/{id}', [WorkController::class, 'show'])->name('client.works.show');
+    Route::post('/trabajos', [WorkController::class, 'store'])->name('client.works.store');
+});
+
+// Rutas para Administradores (Panel de administración)
+Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/clientes', [AdminController::class, 'listClients'])->name('admin.clients');
+    Route::get('/admin/clientes/{id}', [AdminController::class, 'showClient'])->name('admin.client.show');
+    Route::get('/admin/trabajos', [WorkController::class, 'adminIndex'])->name('admin.works');
+    Route::get('/admin/trabajos/{id}', [WorkController::class, 'adminShow'])->name('admin.work.show');
+});
