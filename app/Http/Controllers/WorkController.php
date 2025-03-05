@@ -50,12 +50,59 @@ class WorkController extends Controller
      */
     public function adminIndex()
     {
-        $works = Work::with('client.user')->get();
+        return Inertia::render('Admin/Works', [
+            'pendingWorks' => Work::with('client.user')
+                ->where('estado', 'pendiente')
+                ->orderBy('created_at', 'asc')
+                ->get(),
 
-        return Inertia::render('Admin/Works/Index', [
-            'works' => $works
+            'inProgressWorks' => Work::with('client.user')
+                ->where('estado', 'en_progreso')
+                ->orderBy('created_at', 'asc')
+                ->get(),
+
+            'completedWorks' => Work::with('client.user')
+                ->where('estado', 'finalizado')
+                ->where('updated_at', '>=', now()->subDays(10)) // Solo trabajos de los últimos 10 días
+                ->orderBy('created_at', 'asc')
+                ->get(),
         ]);
     }
+
+
+    public function updateStatus(Request $request, $id)
+    {
+        $work = Work::findOrFail($id);
+        $newStatus = $request->input('estado');
+
+        if (!in_array($newStatus, ['pendiente', 'en_progreso', 'finalizado'])) {
+            return response()->json(['error' => 'Estado inválido'], 422);
+        }
+
+        $work->estado = $newStatus;
+        $work->updated_at = now(); // Asegurar que se registre el cambio
+        $work->save();
+
+        return redirect()->route('admin.works')->with('success', 'Estado del trabajo actualizado.');
+    }
+
+    public function assignWork(Request $request, $id)
+    {
+        $work = Work::findOrFail($id);
+
+        $request->validate([
+            'assigned_to' => 'nullable|exists:users,id',
+            'due_date' => 'nullable|date'
+        ]);
+
+        $work->assigned_to = $request->input('assigned_to');
+        $work->due_date = $request->input('due_date');
+        $work->save();
+
+        return redirect()->route('admin.works')->with('success', 'Trabajo asignado correctamente.');
+    }
+
+
 
     /**
      * Muestra los detalles de un trabajo específico en el panel de administración.

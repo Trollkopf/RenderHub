@@ -42,7 +42,11 @@ Route::middleware(['auth', RoleMiddleware::class . ':cliente'])->group(function 
 Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/clientes', [AdminController::class, 'listClients'])->name('admin.clients');
-    Route::get('/admin/clientes/{id}', [AdminController::class, 'showClient'])->name('admin.client.show');
+    Route::get('/admin/clientes/{id}', [AdminController::class, 'showClient'])->name('admin.clients.show');
+    Route::delete('/admin/clientes/{id}', [AdminController::class, 'deleteClient'])->name('admin.clients.delete');
     Route::get('/admin/trabajos', [WorkController::class, 'adminIndex'])->name('admin.works');
-    Route::get('/admin/trabajos/{id}', [WorkController::class, 'adminShow'])->name('admin.work.show');
+    Route::get('/admin/trabajos/{id}', [WorkController::class, 'adminShow'])->name('admin.works.show');
+    Route::put('/admin/trabajos/{id}/asignar', [WorkController::class, 'assignWork'])->name('admin.works.assign');
+    Route::get('/admin/settings', [AdminController::class, 'settings'])->name('admin.settings');
+    Route::get('/admin/kanban', [AdminController::class, 'kanban'])->name('admin.kanban');
 });

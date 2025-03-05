@@ -30,4 +30,9 @@ class Work extends Model
     {
         return $this->hasMany(ChangeRequest::class);
     }
+
+    public function assignedAdmin()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
+    }
 }

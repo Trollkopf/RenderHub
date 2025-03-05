@@ -5,7 +5,7 @@ import { Head } from '@inertiajs/vue3'
 
 <template>
     <Admin>
-        <Head title="Detalles del Trabajo" />
-        <h1 class="text-2xl font-bold">Hola! Esto es la vista de detalles del trabajo</h1>
+        <Head title="Configuración" />
+        <h1 class="text-2xl font-bold">Hola! Esto es la configuración del sistema</h1>
     </Admin>
 </template>
