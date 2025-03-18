@@ -19,7 +19,10 @@ const selectedWork = ref(null)
 
 // Abrir modal de revisión
 const openReviewModal = (work) => {
-    selectedWork.value = work
+    selectedWork.value = {
+        ...work,
+        change_requests: work.change_requests ?? [] // Asegurar que siempre sea un array
+    }
     showReviewModal.value = true
 }
 </script>

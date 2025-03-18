@@ -14,20 +14,20 @@ class WorkController extends Controller
      * Muestra la lista de trabajos del cliente autenticado.
      */
     public function index()
-{
-    $client = Auth::user()->client;
+    {
+        $client = Auth::user()->client;
 
-    if (!$client) {
-        abort(403, 'No tienes acceso a esta sección.');
+        if (!$client) {
+            abort(403, 'No tienes acceso a esta sección.');
+        }
+
+        return Inertia::render('Client/Works/Index', [
+            'pendingWorks' => $client->works()->with('changeRequests')->where('estado', 'pendiente')->orderBy('created_at', 'desc')->paginate(3),
+            'inProgressWorks' => $client->works()->with('changeRequests')->where('estado', 'en_progreso')->orderBy('created_at', 'desc')->paginate(3),
+            'waitingConfirmationWorks' => $client->works()->with('changeRequests')->where('estado', 'esperando_confirmacion')->paginate(3),
+            'completedWorks' => $client->works()->with('changeRequests')->where('estado', 'finalizado')->orderBy('created_at', 'desc')->paginate(3),
+        ]);
     }
-
-    return Inertia::render('Client/Works/Index', [
-        'pendingWorks' => $client->works()->with('changeRequests')->where('estado', 'pendiente')->orderBy('created_at', 'desc')->paginate(3),
-        'inProgressWorks' => $client->works()->with('changeRequests')->where('estado', 'en_progreso')->orderBy('created_at', 'desc')->paginate(3),
-        'waitingConfirmationWorks' => $client->works()->with('changeRequests')->where('estado', 'esperando_confirmacion')->paginate(3),
-        'completedWorks' => $client->works()->with('changeRequests')->where('estado', 'finalizado')->orderBy('created_at', 'desc')->paginate(3),
-    ]);
-}
 
 
     /**
@@ -192,37 +192,38 @@ class WorkController extends Controller
             return back()->with('error', 'No puedes modificar este trabajo.');
         }
 
+        // **ACEPTAR EL TRABAJO**
         if ($request->input('action') === 'accept') {
             $work->estado = 'finalizado';
             $work->save();
             return back()->with('success', 'Trabajo aceptado.');
         }
 
+        // **RECHAZAR EL TRABAJO**
         if ($request->input('action') === 'reject') {
             // **Obtener la última solicitud de cambio**
-            $lastChangeRequest = ChangeRequest::where('work_id', $work->id)->orderBy('created_at', 'desc')->first();
+            $lastChangeRequest = ChangeRequest::where('work_id', $work->id)
+                ->orderBy('created_at', 'desc')
+                ->first();
 
-            // dd($lastChangeRequest);
+            // **Si no hay cambios previos, inicializar el contador en 1**
+            $changeCount = $lastChangeRequest ? ($lastChangeRequest->change_count + 1) : 1;
 
-            if ($lastChangeRequest && $lastChangeRequest->change_count >= 3) {
+            // **Verificar si se pueden hacer más cambios**
+            if ($changeCount > 3) {
                 return back()->with('error', 'No puedes solicitar más cambios.');
             }
 
+            // **Validar los datos del formulario**
             $validated = $request->validate([
                 'descripcion' => 'required|string|min:10',
                 'archivo' => 'nullable|mimes:jpg,jpeg,png,pdf,ppt,pptx'
             ]);
 
-            // **Guardar archivo si se sube**
-            $archivoPath = null;
-            if ($request->hasFile('archivo')) {
-                $archivoPath = $request->file('archivo')->store('change_requests', 'public');
-            }
-
-            // **Incrementar el contador de cambios**
-            $changeCount = $lastChangeRequest->change_count + 1;
-
-            // dd($changeCount);
+            // **Guardar el archivo si se sube**
+            $archivoPath = $request->hasFile('archivo')
+                ? $request->file('archivo')->store('change_requests', 'public')
+                : null;
 
             // **Crear nueva solicitud de cambio**
             ChangeRequest::create([
@@ -234,8 +235,8 @@ class WorkController extends Controller
                 'change_count' => $changeCount
             ]);
 
-            // **Mantener el trabajo en estado "en progreso"**
-            $work->estado = 'en_progreso';
+            // **Actualizar el estado del trabajo a 'pendiente'**
+            $work->estado = 'pendiente';
             $work->save();
 
             return back()->with('success', 'Trabajo rechazado y solicitud de cambio enviada.');
@@ -243,5 +244,7 @@ class WorkController extends Controller
 
         return back()->with('error', 'Acción no válida.');
     }
+
+
 
 }
