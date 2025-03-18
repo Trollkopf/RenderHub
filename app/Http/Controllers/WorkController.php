@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ChangeRequest;
 use Illuminate\Http\Request;
 use App\Models\Work;
 use Illuminate\Support\Facades\Auth;
@@ -13,19 +14,20 @@ class WorkController extends Controller
      * Muestra la lista de trabajos del cliente autenticado.
      */
     public function index()
-    {
-        $client = Auth::user()->client;
+{
+    $client = Auth::user()->client;
 
-        if (!$client) {
-            abort(403, 'No tienes acceso a esta sección.');
-        }
-
-        return Inertia::render('Client/Works/Index', [
-            'pendingWorks' => $client->works()->where('estado', 'pendiente')->orderBy('created_at', 'desc')->paginate(3),
-            'inProgressWorks' => $client->works()->where('estado', 'en_progreso')->orderBy('created_at', 'desc')->paginate(3),
-            'completedWorks' => $client->works()->where('estado', 'finalizado')->orderBy('created_at', 'desc')->paginate(3),
-        ]);
+    if (!$client) {
+        abort(403, 'No tienes acceso a esta sección.');
     }
+
+    return Inertia::render('Client/Works/Index', [
+        'pendingWorks' => $client->works()->with('changeRequests')->where('estado', 'pendiente')->orderBy('created_at', 'desc')->paginate(3),
+        'inProgressWorks' => $client->works()->with('changeRequests')->where('estado', 'en_progreso')->orderBy('created_at', 'desc')->paginate(3),
+        'waitingConfirmationWorks' => $client->works()->with('changeRequests')->where('estado', 'esperando_confirmacion')->paginate(3),
+        'completedWorks' => $client->works()->with('changeRequests')->where('estado', 'finalizado')->orderBy('created_at', 'desc')->paginate(3),
+    ]);
+}
 
 
     /**
@@ -33,9 +35,8 @@ class WorkController extends Controller
      */
     public function show($id)
     {
-        $work = Work::with('client.user')->findOrFail($id);
+        $work = Work::with(['client.user', 'changeRequests'])->findOrFail($id);
 
-        // Verificar que el trabajo pertenece al cliente autenticado
         if (Auth::user()->client->id !== $work->client_id) {
             abort(403, 'No tienes permiso para ver este trabajo.');
         }
@@ -44,6 +45,9 @@ class WorkController extends Controller
             'work' => $work
         ]);
     }
+
+
+
 
     /**
      * Muestra todos los trabajos en el panel de administración.
@@ -61,9 +65,14 @@ class WorkController extends Controller
                 ->orderBy('created_at', 'asc')
                 ->get(),
 
+            'waitingConfirmationWorks' => Work::with('client.user')
+                ->where('estado', 'esperando_confirmacion')
+                ->orderBy('created_at', 'asc')
+                ->get(),
+
             'completedWorks' => Work::with('client.user')
                 ->where('estado', 'finalizado')
-                ->where('updated_at', '>=', now()->subDays(10)) // Solo trabajos de los últimos 10 días
+                ->where('updated_at', '>=', now()->subDays(10)) // Mostrar solo los últimos 10 días
                 ->orderBy('created_at', 'asc')
                 ->get(),
         ]);
@@ -75,7 +84,7 @@ class WorkController extends Controller
         $work = Work::findOrFail($id);
         $newStatus = $request->input('estado');
 
-        if (!in_array($newStatus, ['pendiente', 'en_progreso', 'finalizado'])) {
+        if (!in_array($newStatus, ['pendiente', 'en_progreso', 'esperando_confirmacion', 'finalizado'])) {
             return response()->json(['error' => 'Estado inválido'], 422);
         }
 
@@ -145,30 +154,94 @@ class WorkController extends Controller
 
     public function store(Request $request)
     {
-        $client = Auth::user()->client;
-
-        if (!$client) {
-            abort(403, 'No tienes acceso a esta sección.');
-        }
-
-        // Validación de la solicitud
         $validated = $request->validate([
             'titulo' => 'required|string|max:255',
-            'descripcion' => 'required|string',
+            'descripcion' => 'required|string|min:10',
         ]);
 
-        // Crear nuevo trabajo con estado "pendiente"
-        Work::create([
+        $client = Auth::user()->client;
+
+        // Crear el nuevo trabajo
+        $work = Work::create([
             'client_id' => $client->id,
             'titulo' => $validated['titulo'],
             'descripcion' => $validated['descripcion'],
-            'estado' => 'pendiente', // Siempre inicia como pendiente
-            'archivos' => json_encode([]), // Iniciamos con una lista vacía de archivos
+            'estado' => 'pendiente',
+            'archivos' => json_encode([]), // Inicialmente sin archivos
         ]);
 
-        return redirect()->back()->with('success', 'Trabajo solicitado correctamente.');
+        // **Crear automáticamente un ChangeRequest asociado**
+        ChangeRequest::create([
+            'work_id' => $work->id,
+            'client_id' => $client->id,
+            'descripcion' => 'Solicitud inicial de trabajo.',
+            'archivo' => null, // No hay archivo al inicio
+            'estado' => 'pendiente'
+        ]);
+
+        return back()->with('success', 'Trabajo solicitado con éxito.');
     }
 
 
+    public function reviewWork(Request $request, $id)
+    {
+        $work = Work::findOrFail($id);
+        $client = Auth::user()->client;
+
+        if ($work->estado !== 'esperando_confirmacion') {
+            return back()->with('error', 'No puedes modificar este trabajo.');
+        }
+
+        if ($request->input('action') === 'accept') {
+            $work->estado = 'finalizado';
+            $work->save();
+            return back()->with('success', 'Trabajo aceptado.');
+        }
+
+        if ($request->input('action') === 'reject') {
+            // **Obtener la última solicitud de cambio**
+            $lastChangeRequest = ChangeRequest::where('work_id', $work->id)->orderBy('created_at', 'desc')->first();
+
+            // dd($lastChangeRequest);
+
+            if ($lastChangeRequest && $lastChangeRequest->change_count >= 3) {
+                return back()->with('error', 'No puedes solicitar más cambios.');
+            }
+
+            $validated = $request->validate([
+                'descripcion' => 'required|string|min:10',
+                'archivo' => 'nullable|mimes:jpg,jpeg,png,pdf,ppt,pptx'
+            ]);
+
+            // **Guardar archivo si se sube**
+            $archivoPath = null;
+            if ($request->hasFile('archivo')) {
+                $archivoPath = $request->file('archivo')->store('change_requests', 'public');
+            }
+
+            // **Incrementar el contador de cambios**
+            $changeCount = $lastChangeRequest->change_count + 1;
+
+            // dd($changeCount);
+
+            // **Crear nueva solicitud de cambio**
+            ChangeRequest::create([
+                'work_id' => $work->id,
+                'client_id' => $client->id,
+                'descripcion' => $validated['descripcion'],
+                'archivo' => $archivoPath,
+                'estado' => 'pendiente',
+                'change_count' => $changeCount
+            ]);
+
+            // **Mantener el trabajo en estado "en progreso"**
+            $work->estado = 'en_progreso';
+            $work->save();
+
+            return back()->with('success', 'Trabajo rechazado y solicitud de cambio enviada.');
+        }
+
+        return back()->with('error', 'Acción no válida.');
+    }
 
 }

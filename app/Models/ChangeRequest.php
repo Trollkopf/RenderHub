@@ -15,6 +15,7 @@ class ChangeRequest extends Model
         'descripcion',
         'archivo',
         'estado',
+        'change_count',
     ];
 
     public function work()

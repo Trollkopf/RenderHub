@@ -36,6 +36,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':cliente'])->group(function 
     Route::get('/trabajos', [WorkController::class, 'index'])->name('client.works');
     Route::get('/trabajos/{id}', [WorkController::class, 'show'])->name('client.works.show');
     Route::post('/trabajos', [WorkController::class, 'store'])->name('client.works.store');
+    Route::post('/cliente/trabajos/{id}/revisar', [WorkController::class, 'reviewWork'])->name('client.works.review');
 });
 
 // Rutas para Administradores (Panel de administración)
@@ -47,6 +48,6 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::get('/admin/trabajos', [WorkController::class, 'adminIndex'])->name('admin.works');
     Route::get('/admin/trabajos/{id}', [WorkController::class, 'adminShow'])->name('admin.works.show');
     Route::put('/admin/trabajos/{id}/asignar', [WorkController::class, 'assignWork'])->name('admin.works.assign');
+    Route::put('/admin/trabajos/{id}/estado', [WorkController::class, 'updateStatus'])->name('admin.works.updateStatus');
     Route::get('/admin/settings', [AdminController::class, 'settings'])->name('admin.settings');
-    Route::get('/admin/kanban', [AdminController::class, 'kanban'])->name('admin.kanban');
 });

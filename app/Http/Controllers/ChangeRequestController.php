@@ -33,4 +33,5 @@ class ChangeRequestController extends Controller
 
         return redirect()->back()->with('success', 'Cambio solicitado.');
     }
+
 }
