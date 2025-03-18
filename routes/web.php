@@ -17,7 +17,7 @@ Route::get('/', function () {
 })->name('home');
 
 // Rutas de autenticación de Laravel Breeze
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 // Redirección después del login según el rol
 Route::get('/home', function () {
@@ -50,4 +50,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::put('/admin/trabajos/{id}/asignar', [WorkController::class, 'assignWork'])->name('admin.works.assign');
     Route::put('/admin/trabajos/{id}/estado', [WorkController::class, 'updateStatus'])->name('admin.works.updateStatus');
     Route::get('/admin/settings', [AdminController::class, 'settings'])->name('admin.settings');
+    Route::put('/admin/trabajos/{id}/estado', [AdminController::class, 'updateStatus'])->name('admin.works.updateStatus');
+    Route::put('/admin/trabajos/{id}/reasignar', [AdminController::class, 'reassign'])->name('admin.works.reassign');
+
 });

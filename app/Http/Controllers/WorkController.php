@@ -117,13 +117,13 @@ class WorkController extends Controller
      * Muestra los detalles de un trabajo específico en el panel de administración.
      */
     public function adminShow($id)
-    {
-        $work = Work::with('client.user')->findOrFail($id);
+{
+    $work = Work::with(['client.user', 'changeRequests', 'assignedAdmin'])->findOrFail($id);
 
-        return Inertia::render('Admin/Works/Show', [
-            'work' => $work
-        ]);
-    }
+    return Inertia::render('Admin/WorkDetail', [
+        'work' => $work
+    ]);
+}
 
     /**
      * Permite al administrador subir archivos a un trabajo.

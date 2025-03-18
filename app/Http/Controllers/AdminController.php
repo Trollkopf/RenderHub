@@ -58,13 +58,13 @@ class AdminController extends Controller
      * Muestra los detalles de un cliente junto con sus trabajos.
      */
     public function showClient($id)
-{
-    $client = Client::with(['user', 'works'])->findOrFail($id);
+    {
+        $client = Client::with(['user', 'works'])->findOrFail($id);
 
-    return Inertia::render('Admin/ClientDetail', [
-        'client' => $client
-    ]);
-}
+        return Inertia::render('Admin/ClientDetail', [
+            'client' => $client
+        ]);
+    }
 
     /**
      * Muestra la configuración del administrador.
@@ -83,4 +83,23 @@ class AdminController extends Controller
             'works' => Work::with('client.user')->get()->groupBy('estado')
         ]);
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $work = Work::findOrFail($id);
+        $work->estado = $request->input('estado');
+        $work->save();
+
+        return back()->with('success', 'Estado actualizado.');
+    }
+
+    public function reassign(Request $request, $id)
+    {
+        $work = Work::findOrFail($id);
+        $work->assigned_to = $request->input('assigned_to');
+        $work->save();
+
+        return back()->with('success', 'Trabajo reasignado.');
+    }
+
 }
