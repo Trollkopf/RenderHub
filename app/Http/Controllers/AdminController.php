@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ChangeRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Work;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
@@ -16,13 +18,22 @@ class AdminController extends Controller
      * Muestra el Dashboard del Administrador con datos clave.
      */
     public function dashboard()
-    {
-        return Inertia::render('Admin/Dashboard', [
-            'clients' => Client::with('user')->count(), // Contamos clientes
-            'works' => Work::count(), // Contamos trabajos
-            'recentWorks' => Work::with('client.user')->latest()->take(5)->get(), // Últimos 5 trabajos
-        ]);
-    }
+{
+    return Inertia::render('Admin/Dashboard', [
+        'stats' => [
+            'total' => Work::count(),
+            'pendientes' => Work::where('estado', 'pendiente')->count(),
+            'progreso' => Work::where('estado', 'en_progreso')->count(),
+            'confirmacion' => Work::where('estado', 'esperando_confirmacion')->count(),
+            'finalizados' => Work::where('estado', 'finalizado')->count(),
+            'cambios' => ChangeRequest::count(),
+        ],
+        'latestWorks' => Work::with('client.user')->latest()->take(5)->get(),
+        'latestClients' => Client::with('user')->latest()->take(5)->get(),
+        'recentNotifications' => Auth::user()->notifications()->where('leido', false)->latest()->take(3)->get(),
+    ]);
+}
+
 
     /**
      * Lista todos los clientes con paginación.

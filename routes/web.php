@@ -56,7 +56,6 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::get('/admin/trabajos/{id}', [WorkController::class, 'adminShow'])->name('admin.works.show');
     Route::put('/admin/trabajos/{id}/asignar', [WorkController::class, 'assignWork'])->name('admin.works.assign');
     Route::put('/admin/trabajos/{id}/estado', [WorkController::class, 'updateStatus'])->name('admin.works.updateStatus');
-    Route::put('/admin/trabajos/{id}/estado', [AdminController::class, 'updateStatus'])->name('admin.works.updateStatus');
     Route::put('/admin/trabajos/{id}/reasignar', [AdminController::class, 'reassign'])->name('admin.works.reassign');
 
     // Configuración
@@ -86,10 +85,12 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])
         Route::post('/documents/upload', [SettingsController::class, 'uploadDocument'])->name('settings.documents.upload');
     });
 
-    // Notificaciones
-    Route::middleware(['auth'])->group(function () {
-        Route::get('/notificaciones', [NotificationController::class, 'index'])->name('notifications.index');
-        Route::put('/notificaciones/{id}/leer', [NotificationController::class, 'markAsRead'])->name('notifications.read');
-        Route::put('/notificaciones/marcar-todas', [NotificationController::class, 'markAllAsRead'])->name('notifications.readAll');
-    });
+// Notificaciones
+Route::middleware(['auth'])->group(function () {
+    Route::get('/notificaciones', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::put('/notificaciones/{id}/leer', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::put('/notificaciones/marcar-todas', [NotificationController::class, 'markAllAsRead'])->name('notifications.readAll');
+    Route::get('/notificaciones/ver/{id}', [NotificationController::class, 'view'])->name('notifications.view');
+    Route::delete('/notificaciones/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
+});
 

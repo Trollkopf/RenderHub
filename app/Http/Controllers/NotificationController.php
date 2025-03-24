@@ -17,11 +17,22 @@ class NotificationController extends Controller
         $notifications = Auth::user()
             ->notifications()
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(10);
 
         return Inertia::render('Notifications/Index', [
             'notifications' => $notifications
         ]);
+    }
+
+    public function view($id)
+    {
+        $notification = Notification::findOrFail($id);
+
+        // Marcar como leída
+        $notification->update(['leido' => true]);
+
+        // Redirigir al trabajo relacionado (o donde necesites)
+        return redirect()->route('admin.works.show', $notification->work_id);
     }
 
     /**
@@ -48,5 +59,12 @@ class NotificationController extends Controller
         return back()->with('success', 'Todas las notificaciones fueron marcadas como leídas.');
     }
 
+    public function destroy($id)
+    {
+        $notification = Notification::findOrFail($id);
+        $notification->delete();
+
+        return back();
+    }
 
 }

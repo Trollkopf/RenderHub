@@ -39,6 +39,10 @@ const currentRoute = computed(() => usePage().url)
                 </Link>
             </li>
             <li>
+                <Link :href="route('notifications.index')" class="block p-2 hover:bg-gray-600">🔔 Notificaciones</Link>
+            </li>
+
+            <li>
                 <Link :href="route('settings.index')" class="block p-3 rounded hover:bg-gray-700"
                     :class="{ 'bg-gray-700': currentRoute === '/admin/settings' }">
                 ⚙️ Configuración

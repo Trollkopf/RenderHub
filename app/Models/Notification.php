@@ -13,6 +13,7 @@ class Notification extends Model
         'user_id',
         'mensaje',
         'leido',
+        'work_id'
     ];
 
     protected $casts = [
@@ -22,5 +23,9 @@ class Notification extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function work(){
+        return $this->belongsTo(Work::class);
     }
 }
