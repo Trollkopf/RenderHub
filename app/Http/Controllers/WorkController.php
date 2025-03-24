@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ChangeRequest;
+use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Work;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +56,11 @@ class WorkController extends Controller
      */
     public function adminIndex()
     {
+
+        $admins = User::where('role', 'admin')->get();
+
+        $daysToKeep = Setting::getValue('auto_archive_days', 10);
+
         return Inertia::render('Admin/Works', [
             'pendingWorks' => Work::with('client.user')
                 ->where('estado', 'pendiente')
@@ -72,9 +79,11 @@ class WorkController extends Controller
 
             'completedWorks' => Work::with('client.user')
                 ->where('estado', 'finalizado')
-                ->where('updated_at', '>=', now()->subDays(10)) // Mostrar solo los últimos 10 días
+                ->where('updated_at', '>=', now()->subDays($daysToKeep))
                 ->orderBy('created_at', 'asc')
                 ->get(),
+
+            'admins' => $admins,
         ]);
     }
 
@@ -117,13 +126,13 @@ class WorkController extends Controller
      * Muestra los detalles de un trabajo específico en el panel de administración.
      */
     public function adminShow($id)
-{
-    $work = Work::with(['client.user', 'changeRequests', 'assignedAdmin'])->findOrFail($id);
+    {
+        $work = Work::with(['client.user', 'changeRequests', 'assignedAdmin'])->findOrFail($id);
 
-    return Inertia::render('Admin/WorkDetail', [
-        'work' => $work
-    ]);
-}
+        return Inertia::render('Admin/WorkDetail', [
+            'work' => $work
+        ]);
+    }
 
     /**
      * Permite al administrador subir archivos a un trabajo.
@@ -245,6 +254,20 @@ class WorkController extends Controller
         return back()->with('error', 'Acción no válida.');
     }
 
+    public function archived()
+    {
+        $days = Setting::getValue('auto_archive_days', 10);
+
+        $archivedWorks = Work::with(['client.user'])
+            ->where('estado', 'finalizado')
+            ->where('updated_at', '<', now()->subDays($days))
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
+        return Inertia::render('Admin/Works/Archived', [
+            'archivedWorks' => $archivedWorks
+        ]);
+    }
 
 
 }

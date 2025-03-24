@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AdminController;
@@ -49,8 +50,25 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::get('/admin/trabajos/{id}', [WorkController::class, 'adminShow'])->name('admin.works.show');
     Route::put('/admin/trabajos/{id}/asignar', [WorkController::class, 'assignWork'])->name('admin.works.assign');
     Route::put('/admin/trabajos/{id}/estado', [WorkController::class, 'updateStatus'])->name('admin.works.updateStatus');
-    Route::get('/admin/settings', [AdminController::class, 'settings'])->name('admin.settings');
+    Route::get('/admin/settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::put('/admin/trabajos/{id}/estado', [AdminController::class, 'updateStatus'])->name('admin.works.updateStatus');
     Route::put('/admin/trabajos/{id}/reasignar', [AdminController::class, 'reassign'])->name('admin.works.reassign');
+    Route::post('/admin/users', [AdminController::class, 'storeAdmin'])->name('admin.users.store');
+    Route::post('/admin/profile', [SettingsController::class, 'updateProfile'])->name('admin.profile.update');
+    Route::delete('/admin/users/{id}', [AdminController::class, 'destroyAdmin'])->name('admin.users.destroy');
+    Route::get('/admin/archivados', [WorkController::class, 'archived'])->name('admin.works.archived');
 
 });
+
+// Rutas de Configuración
+Route::middleware(['auth', RoleMiddleware::class . ':admin'])
+    ->prefix('admin/settings')
+    ->group(function () {
+        Route::put('/auto-archive', [SettingsController::class, 'updateAutoArchive'])->name('settings.autoArchive');
+        Route::put('/request-limit', [SettingsController::class, 'updateRequestLimit'])->name('settings.requestLimit');
+        Route::put('/system-status', [SettingsController::class, 'updateSystemStatus'])->name('settings.systemStatus');
+        Route::put('/notifications', [SettingsController::class, 'updateNotifications'])->name('settings.notifications');
+        Route::post('/global-action', [SettingsController::class, 'runAction'])->name('settings.globalAction');
+        Route::post('/documents/upload', [SettingsController::class, 'uploadDocument'])->name('settings.documents.upload');
+    });
+
