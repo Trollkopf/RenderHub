@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\NotificationHelper;
 use App\Models\ChangeRequest;
 use App\Models\Setting;
 use App\Models\User;
@@ -158,6 +159,9 @@ class WorkController extends Controller
         $work->estado = 'en_progreso';
         $work->save();
 
+        NotificationHelper::notify($work->client->user_id, "🎨 Tu trabajo \"{$work->titulo}\" tiene nuevas entregas.");
+
+
         return redirect()->back()->with('success', 'Archivos subidos correctamente.');
     }
 
@@ -187,6 +191,13 @@ class WorkController extends Controller
             'archivo' => null, // No hay archivo al inicio
             'estado' => 'pendiente'
         ]);
+
+        // Notificar a todos los administradores
+        $admins = User::where('role', 'admin')->get();
+        foreach ($admins as $admin) {
+            NotificationHelper::notify($admin->id, '📥 Nuevo trabajo solicitado por ' . $client->user->name);
+        }
+
 
         return back()->with('success', 'Trabajo solicitado con éxito.');
     }
@@ -247,6 +258,8 @@ class WorkController extends Controller
             // **Actualizar el estado del trabajo a 'pendiente'**
             $work->estado = 'pendiente';
             $work->save();
+
+            NotificationHelper::notify($work->assigned_to, "🔁 El cliente ha solicitado cambios en \"{$work->titulo}\".");
 
             return back()->with('success', 'Trabajo rechazado y solicitud de cambio enviada.');
         }

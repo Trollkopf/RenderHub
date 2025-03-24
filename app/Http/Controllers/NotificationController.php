@@ -14,7 +14,10 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        $notifications = Auth::user()->notifications()->orderBy('created_at', 'desc')->get();
+        $notifications = Auth::user()
+            ->notifications()
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return Inertia::render('Notifications/Index', [
             'notifications' => $notifications
@@ -26,12 +29,24 @@ class NotificationController extends Controller
      */
     public function markAsRead($id)
     {
-        $notification = Notification::where('id', $id)
-            ->where('user_id', Auth::id()) // Asegurar que solo puede marcar las suyas
-            ->firstOrFail();
-
+        $notification = Notification::where('user_id', Auth::id())->findOrFail($id);
         $notification->update(['leido' => true]);
 
-        return redirect()->back();
+        return back()->with('success', 'Notificación marcada como leída.');
     }
+
+    /**
+     * Marca todas las notificaciones como leidas
+     */
+    public function markAllAsRead()
+    {
+        Auth::user()
+            ->notifications()
+            ->where('leido', false)
+            ->update(['leido' => true]);
+
+        return back()->with('success', 'Todas las notificaciones fueron marcadas como leídas.');
+    }
+
+
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
@@ -83,5 +84,12 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])
         Route::put('/notifications', [SettingsController::class, 'updateNotifications'])->name('settings.notifications');
         Route::post('/global-action', [SettingsController::class, 'runAction'])->name('settings.globalAction');
         Route::post('/documents/upload', [SettingsController::class, 'uploadDocument'])->name('settings.documents.upload');
+    });
+
+    // Notificaciones
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/notificaciones', [NotificationController::class, 'index'])->name('notifications.index');
+        Route::put('/notificaciones/{id}/leer', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+        Route::put('/notificaciones/marcar-todas', [NotificationController::class, 'markAllAsRead'])->name('notifications.readAll');
     });
 
