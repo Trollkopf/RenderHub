@@ -269,5 +269,25 @@ class WorkController extends Controller
         ]);
     }
 
+    public function restore($id)
+    {
+        $work = Work::findOrFail($id);
+
+        if ($work->estado === 'finalizado') {
+            $work->estado = 'pendiente'; // O el estado que prefieras restaurar
+            $work->save();
+        }
+
+        return back()->with('success', 'Trabajo restaurado correctamente.');
+    }
+
+    public function destroy($id)
+    {
+        $work = Work::findOrFail($id);
+        $work->delete();
+
+        return back()->with('success', 'Trabajo eliminado permanentemente.');
+    }
+
 
 }
