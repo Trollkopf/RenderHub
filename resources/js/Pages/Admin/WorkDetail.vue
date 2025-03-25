@@ -40,10 +40,9 @@ const reassignWork = () => {
             <div class="flex justify-between items-center mb-4">
                 <h1 class="text-2xl font-bold">Detalles del Trabajo</h1>
 
-                <Link :href="route('admin.works')"
-                class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700">
-                ⬅️ Volver a la Lista de Trabajos
-                </Link>
+                <button @click="window?.history.back()" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700">
+                    ⬅️ Volver Atrás
+                </button>
             </div>
 
             <!-- Información del trabajo -->
