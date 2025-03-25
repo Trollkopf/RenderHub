@@ -123,7 +123,7 @@ const dropWork = (event, newStatus) => {
             </div>
 
             <!-- MODAL PARA DETALLES Y ASIGNACIÓN -->
-            <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+            <div v-if="showModal"  class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
                 <div class="bg-white p-6 rounded-lg shadow-md w-[100%]">
                     <h2 class="text-2xl font-bold mb-3">Detalles del Trabajo</h2>
                     <p><strong>Título:</strong> {{ selectedWork.titulo }}</p>

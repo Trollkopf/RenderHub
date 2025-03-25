@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ChangeRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Work;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 
 class AdminController extends Controller
@@ -13,13 +18,22 @@ class AdminController extends Controller
      * Muestra el Dashboard del Administrador con datos clave.
      */
     public function dashboard()
-    {
-        return Inertia::render('Admin/Dashboard', [
-            'clients' => Client::with('user')->count(), // Contamos clientes
-            'works' => Work::count(), // Contamos trabajos
-            'recentWorks' => Work::with('client.user')->latest()->take(5)->get(), // Últimos 5 trabajos
-        ]);
-    }
+{
+    return Inertia::render('Admin/Dashboard', [
+        'stats' => [
+            'total' => Work::count(),
+            'pendientes' => Work::where('estado', 'pendiente')->count(),
+            'progreso' => Work::where('estado', 'en_progreso')->count(),
+            'confirmacion' => Work::where('estado', 'esperando_confirmacion')->count(),
+            'finalizados' => Work::where('estado', 'finalizado')->count(),
+            'cambios' => ChangeRequest::count(),
+        ],
+        'latestWorks' => Work::with('client.user')->latest()->take(5)->get(),
+        'latestClients' => Client::with('user')->latest()->take(5)->get(),
+        'recentNotifications' => Auth::user()->notifications()->where('leido', false)->latest()->take(3)->get(),
+    ]);
+}
+
 
     /**
      * Lista todos los clientes con paginación.
@@ -79,8 +93,10 @@ class AdminController extends Controller
      */
     public function kanban()
     {
+        $admins = User::where('role', 'admin')->get();
         return Inertia::render('Admin/Kanban', [
-            'works' => Work::with('client.user')->get()->groupBy('estado')
+            'works' => Work::with('client.user')->get()->groupBy('estado'),
+            'admins' => $admins
         ]);
     }
 
@@ -100,6 +116,38 @@ class AdminController extends Controller
         $work->save();
 
         return back()->with('success', 'Trabajo reasignado.');
+    }
+
+    public function storeAdmin(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => ['required', Password::defaults()],
+        ]);
+
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'role' => 'admin'
+        ]);
+
+        return back()->with('success', 'Administrador creado correctamente.');
+    }
+
+    public function destroyAdmin($id)
+    {
+        $admin = User::where('role', 'admin')->findOrFail($id);
+
+        // Protección básica: no permitir eliminarse a uno mismo
+        if (auth()->id() === $admin->id) {
+            return back()->with('error', 'No puedes eliminar tu propio usuario.');
+        }
+
+        $admin->delete();
+
+        return back()->with('success', 'Administrador eliminado correctamente.');
     }
 
 }

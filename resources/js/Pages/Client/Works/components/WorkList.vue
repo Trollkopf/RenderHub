@@ -1,5 +1,5 @@
 <script setup>
-import WorkCard from '../../components/WorkCard.vue'
+import WorkCard from './WorkCard.vue'
 import { defineProps } from 'vue'
 
 const props = defineProps({

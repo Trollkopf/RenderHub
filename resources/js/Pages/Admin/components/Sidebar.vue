@@ -16,43 +16,41 @@ const currentRoute = computed(() => usePage().url)
         <h2 class="text-lg font-semibold mb-4">⚙️ Admin Panel</h2>
         <ul class="space-y-2">
             <li>
-                <Link
-                    :href="route('admin.dashboard')"
-                    class="block p-3 rounded hover:bg-gray-700"
+                <Link :href="route('admin.dashboard')" class="block p-3 rounded hover:bg-gray-700"
                     :class="{ 'bg-gray-700': currentRoute === '/admin/dashboard' }">
-                    📊 Dashboard
+                📊 Dashboard
                 </Link>
             </li>
             <li>
-                <Link
-                    :href="route('admin.clients')"
-                    class="block p-3 rounded hover:bg-gray-700"
+                <Link :href="route('admin.clients')" class="block p-3 rounded hover:bg-gray-700"
                     :class="{ 'bg-gray-700': currentRoute === '/admin/clientes' }">
-                    👥 Clientes
+                👥 Clientes
                 </Link>
             </li>
             <li>
-                <Link
-                    :href="route('admin.works')"
-                    class="block p-3 rounded hover:bg-gray-700"
+                <Link :href="route('admin.works')" class="block p-3 rounded hover:bg-gray-700"
                     :class="{ 'bg-gray-700': currentRoute === '/admin/trabajos' }">
-                    📂 Trabajos
+                📂 Trabajos
                 </Link>
             </li>
             <li>
-                <Link
-                    :href="route('admin.settings')"
-                    class="block p-3 rounded hover:bg-gray-700"
+                <Link :href="route('admin.works.archived')" class="block p-2 hover:bg-gray-600">
+                🗃️ Archivados
+                </Link>
+            </li>
+            <li>
+                <Link :href="route('notifications.index')" class="block p-2 hover:bg-gray-600">🔔 Notificaciones</Link>
+            </li>
+
+            <li>
+                <Link :href="route('settings.index')" class="block p-3 rounded hover:bg-gray-700"
                     :class="{ 'bg-gray-700': currentRoute === '/admin/settings' }">
-                    ⚙️ Configuración
+                ⚙️ Configuración
                 </Link>
             </li>
             <li class="mt-4 border-t border-gray-600 pt-2">
-                <Link
-                    :href="route('logout')"
-                    method="post"
-                    class="block p-3 rounded hover:bg-red-700">
-                    🚪 Cerrar Sesión
+                <Link :href="route('logout')" method="post" class="block p-3 rounded hover:bg-red-700">
+                🚪 Cerrar Sesión
                 </Link>
             </li>
         </ul>
