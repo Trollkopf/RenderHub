@@ -1,6 +1,8 @@
 <script setup>
 import Admin from './Admin.vue'
-import { Head, Link, router } from '@inertiajs/vue3'
+import useToast from '@/Composables/useToast'
+
+import { Head, Link, router, usePage } from '@inertiajs/vue3'
 import { defineProps, ref } from 'vue'
 
 // Recibimos los datos desde el backend
@@ -11,6 +13,19 @@ const props = defineProps({
     completedWorks: Array,
     admins: Array
 })
+
+const toastMessage = ref('')
+const showToast = ref(false)
+
+const showToastNotification = (message) => {
+    toastMessage.value = message
+    showToast.value = true
+    setTimeout(() => {
+        showToast.value = false
+        toastMessage.value = ''
+    }, 3000)
+}
+
 
 // Estado para manejar el modal de detalles/asignación
 const selectedWork = ref(null)
@@ -31,6 +46,25 @@ const openModal = (work) => {
     selectedAdmin.value = work.assigned_to || null
     dueDate.value = work.due_date || null
     showModal.value = true
+}
+
+// Función para asignar trabajo a un administrador y/o definir fecha de vencimiento
+const assignWork = () => {
+    if (!selectedWork.value) return
+
+    router.put(route('admin.works.reassign', selectedWork.value.id), {
+        assigned_to: selectedAdmin.value,
+        due_date: dueDate.value
+    }, {
+        preserveState: true,
+        onSuccess: () => {
+            closeModal()
+            showToastNotification('✅ Trabajo asignado correctamente')
+        },
+        onError: () => {
+            showToastNotification('❌ Hubo un error', 'error')
+        }
+    })
 }
 
 // Función para cerrar el modal
@@ -123,8 +157,8 @@ const dropWork = (event, newStatus) => {
             </div>
 
             <!-- MODAL PARA DETALLES Y ASIGNACIÓN -->
-            <div v-if="showModal"  class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-                <div class="bg-white p-6 rounded-lg shadow-md w-[100%]">
+            <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+                <div class="bg-white p-6 rounded-lg shadow-md w-[90%]">
                     <h2 class="text-2xl font-bold mb-3">Detalles del Trabajo</h2>
                     <p><strong>Título:</strong> {{ selectedWork.titulo }}</p>
                     <p><strong>Descripción:</strong> {{ selectedWork.descripcion }}</p>
@@ -135,7 +169,7 @@ const dropWork = (event, newStatus) => {
                     <ul v-if="selectedWork.archivos && selectedWork.archivos.length">
                         <li v-for="file in selectedWork.archivos" :key="file">
                             <a :href="`/storage/${file}`" target="_blank" class="text-blue-500 hover:underline">{{ file
-                                }}</a>
+                            }}</a>
                         </li>
                     </ul>
                     <p v-else class="text-gray-500">No hay archivos adjuntos.</p>
@@ -164,6 +198,10 @@ const dropWork = (event, newStatus) => {
                     </div>
                 </div>
             </div>
+        </div>
+        <div v-if="showToast"
+            class="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded shadow-lg z-50 transition-all duration-300">
+            {{ toastMessage }}
         </div>
     </Admin>
 </template>

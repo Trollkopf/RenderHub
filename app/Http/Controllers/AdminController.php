@@ -111,8 +111,10 @@ class AdminController extends Controller
 
     public function reassign(Request $request, $id)
     {
+
         $work = Work::findOrFail($id);
         $work->assigned_to = $request->input('assigned_to');
+        $work->due_date = $request->input('due_date');
         $work->save();
 
         return back()->with('success', 'Trabajo reasignado.');
