@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
@@ -70,6 +71,13 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::get('/admin/archivados', [WorkController::class, 'archived'])->name('admin.works.archived');
     Route::put('/admin/trabajos/{id}/restore', [WorkController::class, 'restore'])->name('admin.works.restore');
     Route::delete('/admin/trabajos/{id}', [WorkController::class, 'destroy'])->name('admin.works.destroy');
+
+    // Calendario
+    Route::get('/admin/calendar', fn() => Inertia::render('Admin/Calendar'))->name('admin.calendar');
+    Route::get('/api/calendar', [CalendarController::class, 'api']);
+    Route::post('/calendar', [CalendarController::class, 'store']);
+    Route::put('/calendar/{id}', [CalendarController::class, 'update']);
+    Route::delete('/calendar/{id}', [CalendarController::class, 'destroy']);
 
 });
 

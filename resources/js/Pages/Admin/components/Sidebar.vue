@@ -39,6 +39,9 @@ const currentRoute = computed(() => usePage().url)
                 </Link>
             </li>
             <li>
+                <Link :href="route('admin.calendar')" class="block p-2 hover:bg-gray-600">🗓️ Calendario</Link>
+            </li>
+            <li>
                 <Link :href="route('notifications.index')" class="block p-2 hover:bg-gray-600">🔔 Notificaciones</Link>
             </li>
 

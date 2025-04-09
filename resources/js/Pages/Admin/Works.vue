@@ -1,6 +1,5 @@
 <script setup>
 import Admin from './Admin.vue'
-import useToast from '@/Composables/useToast'
 
 import { Head, Link, router, usePage } from '@inertiajs/vue3'
 import { defineProps, ref } from 'vue'
