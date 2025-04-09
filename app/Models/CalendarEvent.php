@@ -14,4 +14,10 @@ class CalendarEvent extends Model
         'color',
         'description',
     ];
+
+    public function admins()
+    {
+        return $this->belongsToMany(User::class, 'calendar_event_user', 'event_id', 'user_id');
+    }
+
 }

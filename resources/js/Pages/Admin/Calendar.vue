@@ -35,6 +35,15 @@
                             class="w-full border rounded px-3 py-2 mt-1 resize-none"
                             placeholder="Escribe una descripción corta (máx. 500 caracteres)"></textarea>
                     </label>
+                    <label class="block mb-4">
+                        Administradores asignados:
+                        <select v-model="form.admins" multiple class="w-full border rounded px-3 py-2 mt-1">
+                            <option v-for="admin in admins" :key="admin.id" :value="admin.id">
+                                {{ admin.name }}
+                            </option>
+                        </select>
+                    </label>
+
 
                     <label class="block">
                         Repetición:
@@ -68,6 +77,7 @@ import Admin from './Admin.vue'
 import CalendarComponent from './components/CalendarComponent.vue'
 import { ref } from 'vue'
 import axios from 'axios'
+import { onMounted } from 'vue'
 
 const calendarRef = ref(null)
 
@@ -77,10 +87,17 @@ const form = ref({
     recurrence: null,
     repeat_count: null,
     color: '#3b82f6',
-    description: ''
+    description: '',
+    admins: [] ,
 
 })
 
+const admins = ref([])
+
+onMounted(async () => {
+  const res = await axios.get('/api/admins')
+  admins.value = res.data
+})
 
 async function submitEvent() {
     try {

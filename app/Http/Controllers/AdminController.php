@@ -18,21 +18,21 @@ class AdminController extends Controller
      * Muestra el Dashboard del Administrador con datos clave.
      */
     public function dashboard()
-{
-    return Inertia::render('Admin/Dashboard', [
-        'stats' => [
-            'total' => Work::count(),
-            'pendientes' => Work::where('estado', 'pendiente')->count(),
-            'progreso' => Work::where('estado', 'en_progreso')->count(),
-            'confirmacion' => Work::where('estado', 'esperando_confirmacion')->count(),
-            'finalizados' => Work::where('estado', 'finalizado')->count(),
-            'cambios' => ChangeRequest::count(),
-        ],
-        'latestWorks' => Work::with('client.user')->latest()->take(5)->get(),
-        'latestClients' => Client::with('user')->latest()->take(5)->get(),
-        'recentNotifications' => Auth::user()->notifications()->where('leido', false)->latest()->take(3)->get(),
-    ]);
-}
+    {
+        return Inertia::render('Admin/Dashboard', [
+            'stats' => [
+                'total' => Work::count(),
+                'pendientes' => Work::where('estado', 'pendiente')->count(),
+                'progreso' => Work::where('estado', 'en_progreso')->count(),
+                'confirmacion' => Work::where('estado', 'esperando_confirmacion')->count(),
+                'finalizados' => Work::where('estado', 'finalizado')->count(),
+                'cambios' => ChangeRequest::count(),
+            ],
+            'latestWorks' => Work::with('client.user')->latest()->take(5)->get(),
+            'latestClients' => Client::with('user')->latest()->take(5)->get(),
+            'recentNotifications' => Auth::user()->notifications()->where('leido', false)->latest()->take(3)->get(),
+        ]);
+    }
 
 
     /**
@@ -150,6 +150,12 @@ class AdminController extends Controller
         $admin->delete();
 
         return back()->with('success', 'Administrador eliminado correctamente.');
+    }
+
+    public function index()
+    {
+        $admins = User::where('role', 'admin')->select('id', 'name')->get(); // ajusta esto a tu lógica real
+        return response()->json($admins);
     }
 
 }

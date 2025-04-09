@@ -78,6 +78,8 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::post('/calendar', [CalendarController::class, 'store']);
     Route::put('/calendar/{id}', [CalendarController::class, 'update']);
     Route::delete('/calendar/{id}', [CalendarController::class, 'destroy']);
+    Route::get('/api/admins', [AdminController::class, 'index']);
+
 
 });
 

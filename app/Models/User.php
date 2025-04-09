@@ -35,4 +35,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Notification::class);
     }
+
+    public function calendarEvents()
+    {
+        return $this->belongsToMany(CalendarEvent::class, 'calendar_event_user', 'user_id', 'event_id');
+    }
+
 }

@@ -27,7 +27,12 @@ class CalendarController extends Controller
             'repeat_count' => $request->repeat_until_days,
             'color' => $request->color,
             'description' => $request->description,
+
         ]);
+
+        if ($request->has('admins')) {
+            $baseEvent->admins()->sync($request->admins);
+        }
 
         return response()->json($baseEvent, 201);
     }
@@ -45,6 +50,7 @@ class CalendarController extends Controller
                 'start' => \Carbon\Carbon::parse($event->start)->toDateString(),
                 'color' => $event->color,
                 'description' => $event->description,
+                'admins' => $event->admins->pluck('name')->toArray(),
             ]);
 
             if ($event->recurrence && $event->repeat_count) {
@@ -95,6 +101,10 @@ class CalendarController extends Controller
             'color' => $request->color,
             'description' => $request->description,
         ]);
+
+        if ($request->has('admins')) {
+            $event->admins()->sync($request->admins);
+        }
 
         return response()->json($event);
     }

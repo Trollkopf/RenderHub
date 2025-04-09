@@ -120,6 +120,11 @@ export default {
                     <textarea v-model="selectedEvent.description" maxlength="500"
                         class="w-full border rounded px-3 py-2 mt-1" />
                 </label>
+
+                <p v-if="selectedEvent.admins?.length" class="text-sm text-gray-700 mt-2">
+                    👥 Admins: {{ selectedEvent.admins.join(', ') }}
+                </p>
+
                 <div class="flex justify-end mt-4 space-x-2">
                     <button @click="editMode = false" class="bg-gray-400 text-white px-4 py-2 rounded">Cancelar</button>
                     <button @click="saveChanges" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
