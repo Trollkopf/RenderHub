@@ -354,4 +354,19 @@ class WorkController extends Controller
 
         return back()->with('success', 'Trabajo eliminado permanentemente.');
     }
+
+    public function myWorks()
+{
+    $adminId = Auth::id();
+
+    $assignedWorks = Work::with(['client.user'])
+        ->where('assigned_to', $adminId)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    return Inertia::render('Admin/MyWorks', [
+        'works' => $assignedWorks
+    ]);
+}
+
 }

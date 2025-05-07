@@ -33,6 +33,10 @@ const currentRoute = computed(() => usePage().url)
                 📂 Trabajos
                 </Link>
             </li>
+            <Link :href="route('admin.my-works')" class="block p-3 rounded hover:bg-gray-700"
+                :class="{ 'bg-gray-700': currentRoute === '/admin/mis-trabajos' }">
+            🧑‍💼 Mis Trabajos
+            </Link>
             <li>
                 <Link :href="route('admin.works.archived')" class="block p-2 hover:bg-gray-600">
                 🗃️ Archivados

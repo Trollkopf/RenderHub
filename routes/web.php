@@ -59,6 +59,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::put('/admin/trabajos/{id}/estado', [WorkController::class, 'updateStatus'])->name('admin.works.updateStatus');
     Route::put('/admin/trabajos/{id}/reasignar', [AdminController::class, 'reassign'])->name('admin.works.reassign');
     Route::post('/admin/works/{id}/upload', [WorkController::class, 'uploadFile'])->name('admin.works.upload');
+    Route::get('/admin/mis-trabajos', [WorkController::class, 'myWorks'])->name('admin.my-works');
 
 
     // Configuración
