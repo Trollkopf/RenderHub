@@ -21,13 +21,11 @@ class NotifyUpcomingEvents extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Notifica eventos y trabajos asignados que vencen en 24h';
 
     /**
      * Execute the console command.
      */
-    protected $signature = 'notifications:upcoming-events';
-    protected $description = 'Notifica eventos y trabajos asignados que vencen en 24h';
 
     public function handle()
     {
