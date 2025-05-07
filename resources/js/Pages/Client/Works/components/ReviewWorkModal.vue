@@ -56,18 +56,22 @@ const rejectWork = () => {
 
 <template>
     <!-- MODAL PRINCIPAL DE REVISIÓN -->
-    <div v-if="showReviewModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-        <div class="bg-white p-6 rounded-lg shadow-md w-[600px]">
+    <div v-if="showReviewModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50" style="overflow: auto;">
+        <div class="bg-white p-6 rounded-lg shadow-md w-11/12">
             <h2 class="text-2xl font-bold mb-3">Detalles del Trabajo</h2>
             <p><strong>Título:</strong> {{ selectedWork.titulo }}</p>
             <p><strong>Descripción:</strong> {{ selectedWork.descripcion }}</p>
 
             <h3 class="mt-4 font-semibold">📂 Archivos Adjuntos:</h3>
-            <ul v-if="selectedWork.archivos.length">
-                <li v-for="file in selectedWork.archivos" :key="file">
-                    <a :href="`/storage/${file}`" target="_blank" class="text-blue-500 hover:underline">{{ file }}</a>
-                </li>
-            </ul>
+            <div v-if="selectedWork.archivos">
+                <div class="flex flex-wrap gap-4">
+                    <div v-for="file in selectedWork.archivos.filter(f => f)" :key="file">
+                        <a :href="`/storage/${file}`" target="_blank" class="text-blue-500 hover:underline">
+                            <img :src="`/storage/${file}`" class="w-32 h-auto rounded shadow" />
+                        </a>
+                    </div>
+                </div>
+            </div>
 
             <h3 class="mt-6 font-semibold">🔄 Historial de Cambios</h3>
             <ul v-if="selectedWork.change_requests.length">
@@ -81,7 +85,7 @@ const rejectWork = () => {
                 </li>
             </ul>
 
-            <div class="mt-6 flex justify-between">
+            <div class="mt-6 flex justify-end">
                 <button v-if="selectedWork.change_requests.length >= 3"
                     class="mr-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">
                     Ponte en contacto para solicitar nuevos cambios.

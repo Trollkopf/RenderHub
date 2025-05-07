@@ -7,6 +7,28 @@ const props = defineProps({
     work: Object
 })
 
+const renderFiles = ref([])
+
+const handleFileChange = (e) => {
+    renderFiles.value = [...e.target.files]
+}
+
+const uploadRenderFiles = () => {
+
+    if (!renderFiles.value.length) return
+
+    const formData = new FormData()
+    renderFiles.value.forEach((file, index) => {
+        console.log(file);
+        formData.append(`files[]`, file)
+    })
+
+    router.post(route('admin.works.upload', props.work.id), formData, {
+        preserveState: true,
+        forceFormData: true
+    })
+}
+
 
 // Estado del formulario para cambiar el estado del trabajo
 const form = useForm({
@@ -58,11 +80,15 @@ const reassignWork = () => {
 
             <!-- Archivos adjuntos -->
             <h2 class="text-xl font-semibold mt-4">📂 Archivos Adjuntos</h2>
-            <ul v-if="work.archivos.length">
-                <li v-for="file in work.archivos" :key="file">
-                    <a :href="`/storage/${file}`" target="_blank" class="text-blue-500 hover:underline">{{ file }}</a>
-                </li>
-            </ul>
+            <div v-if="work.archivos">
+                <div class="flex flex-wrap gap-4">
+                    <div v-for="file in work.archivos" :key="file">
+                        <a :href="`/storage/${file}`" target="_blank" class="text-blue-500 hover:underline">
+                            <img :src="`/storage/${file}`" class="w-32 h-auto rounded shadow" />
+                        </a>
+                    </div>
+                </div>
+            </div>
             <p v-else class="text-gray-500">No hay archivos adjuntos.</p>
 
             <!-- Historial de cambios -->
@@ -78,6 +104,16 @@ const reassignWork = () => {
                 </li>
             </ul>
             <p v-else class="text-gray-500">No hay cambios registrados.</p>
+
+            <!-- Subida de nuevos renders -->
+            <h2 class="text-xl font-semibold mt-4">📤 Subir Renders</h2>
+            <input type="file" multiple @change="handleFileChange" class="border p-2 rounded w-full" />
+
+            <button @click="uploadRenderFiles"
+                class="mt-2 px-4 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-700">
+                Subir Archivos
+            </button>
+
 
             <!-- Cambiar estado del trabajo -->
             <h2 class="text-xl font-semibold mt-4">🔄 Cambiar Estado</h2>

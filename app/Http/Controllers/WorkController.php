@@ -152,20 +152,28 @@ class WorkController extends Controller
      */
     public function uploadFile(Request $request, $id)
     {
+
         if (Auth::user()->role !== 'admin') {
             abort(403, 'Solo los administradores pueden subir archivos.');
         }
 
+        $request->validate([
+            'files.*' => 'required|file|mimes:jpg,jpeg,png,pdf'
+        ]);
+
         $work = Work::findOrFail($id);
-        $files = $request->file('files');
+        $files = $request->file('files', );
         $paths = [];
+
 
         foreach ($files as $file) {
             $paths[] = $file->store('renders', 'public');
         }
 
-        $work->archivos = array_merge($work->archivos ?? [], $paths);
-        $work->estado = 'en_progreso';
+
+        // dd($files);
+        $work->archivos = $work->archivos ? array_merge($work->archivos, $paths) : $paths;
+        $work->estado = 'esperando_confirmacion';
         $work->save();
 
         NotificationHelper::notify($work->client->user_id, "🎨 Tu trabajo \"{$work->titulo}\" tiene nuevas entregas.", $work->id);
@@ -184,23 +192,30 @@ class WorkController extends Controller
         $validated = $request->validate([
             'titulo' => 'required|string|max:255',
             'descripcion' => 'required|string|min:10',
+            'archivo' => 'nullable|file|mimes:jpg,jpeg,png,pdf', // Aquí validamos el archivo opcional
         ]);
 
         $client = Auth::user()->client;
+
+        // Guardar el archivo si se ha subido
+        $archivoPath = null;
+        if ($request->hasFile('archivo')) {
+            $archivoPath = $request->file('archivo')->store('change_requests', 'public');
+        }
 
         $work = Work::create([
             'client_id' => $client->id,
             'titulo' => $validated['titulo'],
             'descripcion' => $validated['descripcion'],
             'estado' => 'pendiente',
-            'archivos' => json_encode([]),
+
         ]);
 
         ChangeRequest::create([
             'work_id' => $work->id,
             'client_id' => $client->id,
             'descripcion' => 'Solicitud inicial de trabajo.',
-            'archivo' => null,
+            'archivo' => $archivoPath,
             'estado' => 'pendiente'
         ]);
 
@@ -211,6 +226,7 @@ class WorkController extends Controller
 
         return back()->with('success', 'Trabajo solicitado con éxito.');
     }
+
 
     /**
      * Cliente: Acepta o rechaza un trabajo.
@@ -240,6 +256,7 @@ class WorkController extends Controller
                 }
             }
 
+            $work->save();
             return back()->with('success', 'Trabajo aceptado.');
         }
 
