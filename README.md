@@ -1,66 +1,103 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🖥️ RenderHub
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+RenderHub es una plataforma de gestión de trabajos creativos, diseñada para facilitar la comunicación entre clientes y administradores (renderistas, diseñadores, etc.). Permite solicitar trabajos, hacer seguimiento, gestionar modificaciones y recibir notificaciones tanto para entregas como para eventos importantes.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Características principales
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Gestión completa de trabajos por parte de clientes y admins.
+- Hasta **3 solicitudes de cambios gratuitas** por trabajo.
+- Asignación de responsables y fechas límite.
+- **Calendario integrado** con eventos únicos o recurrentes.
+- **Notificaciones** automáticas para avisar de entregas, cambios y eventos.
+- Subida y descarga de archivos asociados.
+- Panel de configuración para ajustar aspectos clave del sistema.
+- Interfaz dividida por roles: `Admin` y `Cliente`.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🛠️ Requisitos
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP >= 8.2
+- Composer
+- Laravel 12
+- Node.js & npm
+- MySQL / SQLite
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## ⚙️ Instalación
 
-## Laravel Sponsors
+1. Clona este repositorio:
+   ```bash
+   git clone https://github.com/trollkopf/renderhub.git
+   cd renderhub
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2. Instala dependencias:
+   ```bash
+   composer install
+   npm install && npm run dev
+   ```
 
-### Premium Partners
+3. Copia el archivo `.env.example` y configura tu entorno:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+4. Configura tu base de datos en `.env` y ejecuta las migraciones:
+   ```bash
+   php artisan migrate
+   ```
 
-## Contributing
+5. Si usas SQLite, asegúrate de que el archivo exista:
+   ```bash
+   touch database/database.sqlite
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+6. Inicia el servidor:
+   ```bash
+   php artisan serve
+   ```
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🔔 Configurar notificaciones programadas
 
-## Security Vulnerabilities
+RenderHub envía notificaciones automáticamente 24 horas antes de:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- La **fecha límite de un trabajo asignado**.
+- Un **evento de calendario** donde el administrador esté involucrado.
 
-## License
+### 🕒 Añadir cron job
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Para que Laravel ejecute tareas programadas, debes agregar este *cron job* a tu servidor (ej. en `/etc/crontab` o mediante `crontab -e`):
+
+```bash
+* * * * * cd /ruta/a/tu/proyecto && php artisan schedule:run >> /dev/null 2>&1
+```
+
+Esto ejecutará el planificador de Laravel cada minuto.
+
+> 🧠 **Nota:** Laravel detecta automáticamente los comandos programados en Laravel 12, como `notifications:upcoming-events`, gracias a la anotación `#[AsScheduled('hourly')]`.
+
+---
+
+## 📁 Estructura relevante
+
+- `app/Models/Work.php` → Modelo principal de trabajos.
+- `app/Models/ChangeRequest.php` → Modelo para solicitudes de cambio.
+- `app/Models/CalendarEvent.php` → Eventos del calendario.
+- `app/Helpers/NotificationHelper.php` → Envío de notificaciones.
+- `app/Console/Commands/SendUpcomingEventNotifications.php` → Tarea programada.
+- `resources/js/Pages/Admin/` → Vistas del panel de administración.
+- `resources/js/Pages/Client/` → Vistas para los clientes.
+- `resources/js/Components/` → Componentes reutilizables (toasts, modales, etc.).
+
+---
+
+## 🧑‍💻 Autores
+
+- Desarrollado por [Maximiliano Serratosa](https://maxserratosa.es)

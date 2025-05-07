@@ -16,4 +16,14 @@ class NotificationHelper
             'work_id' => $work_id
         ]);
     }
+
+    public static function calendar($userId, $mensaje)
+    {
+
+        Notification::create([
+            'user_id' => $userId,
+            'mensaje' => $mensaje,
+            'leido' => false,
+        ]);
+    }
 }
