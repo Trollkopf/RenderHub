@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Work;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\CalendarEvent;
 
@@ -24,7 +26,7 @@ class CalendarController extends Controller
             'title' => $request->title,
             'start' => $request->date,
             'recurrence' => $request->recurrence,
-            'repeat_count' => $request->repeat_until_days,
+            'repeat_count' => $request->repeat_count,
             'color' => $request->color,
             'description' => $request->description,
 
@@ -47,14 +49,14 @@ class CalendarController extends Controller
             $expanded->push([
                 'title' => $event->title,
                 'id' => $event->id,
-                'start' => \Carbon\Carbon::parse($event->start)->toDateString(),
+                'start' => Carbon::parse($event->start)->toDateString(),
                 'color' => $event->color,
                 'description' => $event->description,
                 'admins' => $event->admins->pluck('name')->toArray(),
             ]);
 
             if ($event->recurrence && $event->repeat_count) {
-                $start = \Carbon\Carbon::parse($event->start);
+                $start = Carbon::parse($event->start);
                 $interval = match ($event->recurrence) {
                     'daily' => '1 day',
                     'weekly' => '1 week',
@@ -80,6 +82,24 @@ class CalendarController extends Controller
                     }
                 }
             }
+        }
+
+        // ✅ Añadir los trabajos con fecha de entrega
+        $works = Work::with('client.user')
+            ->whereNotNull('due_date')
+            ->where('estado', '!=', 'finalizado') // opcional
+            ->get();
+
+        foreach ($works as $work) {
+            $expanded->push([
+                'title' => "🗓️ Entrega: {$work->titulo}",
+                'start' => Carbon::parse($work->due_date)->toDateString(),
+                'color' => '#f87171', // rojo suave
+                'description' => 'Trabajo de ' . $work->client->user->name,
+                'url' => route('admin.works.show', $work->id),
+                'type' => 'work',
+                'id' => "work-{$work->id}",
+            ]);
         }
 
         return $expanded;

@@ -109,7 +109,7 @@ async function submitEvent() {
             title: '',
             start: '',
             recurrence: null,
-            repeat_until_days: null,
+            repeat_count: null,
             color: '#3b82f6'
         }
 
