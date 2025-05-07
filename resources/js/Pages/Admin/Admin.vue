@@ -10,7 +10,7 @@ const toggleMenu = () => showMenu.value = !showMenu.value
 </script>
 
 <template>
-  <div class="flex flex-col h-screen">
+  <div class="flex flex-col h-screen bg-indigo-50">
     <Header @toggleMenu="toggleMenu" />
 
     <div class="flex flex-1">

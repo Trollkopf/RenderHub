@@ -124,10 +124,10 @@ const dropWork = (event, newStatus) => {
                     esperando_confirmacion: waitingConfirmationWorks,
                     finalizado: completedWorks
                 }" :key="status" class="p-4 rounded-lg shadow-md min-h-[300px]" :class="{
-                    'bg-yellow-100': status === 'pendiente',
-                    'bg-blue-100': status === 'en_progreso',
-                    'bg-orange-100': status === 'esperando_confirmacion',
-                    'bg-green-100': status === 'finalizado'
+                    'bg-amber-200': status === 'pendiente',
+                    'bg-blue-200': status === 'en_progreso',
+                    'bg-orange-200': status === 'esperando_confirmacion',
+                    'bg-emerald-200': status === 'finalizado'
                 }" @dragstart="dragStart($event, work)" @dragover.prevent @drop="dropWork($event, status)">
 
                     <h2 class="text-xl font-semibold mb-3">
