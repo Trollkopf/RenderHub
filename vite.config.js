@@ -1,7 +1,5 @@
-import { webcrypto } from 'node:crypto';
-if (!globalThis.crypto) {
-    globalThis.crypto = webcrypto;
-}
+const { webcrypto } = await import ('node:crypto');
+globalThis.crypto = webcrypto;
 
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
