@@ -7,7 +7,8 @@ import WorkNotifications from './components/WorkNotifications.vue'
 
 defineProps({
     user: Object,
-    works: Array
+    works: Array,
+    notifications: Array,
 })
 </script>
 
@@ -22,7 +23,7 @@ defineProps({
             <UserInfo :user="user" />
 
             <!-- Indicador de Novedades -->
-            <WorkNotifications />
+            <WorkNotifications :notifications="notifications"/>
 
             <!-- Listado de Trabajos -->
             <WorkList :works="works" />

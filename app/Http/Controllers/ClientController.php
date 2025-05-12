@@ -26,16 +26,22 @@ class ClientController extends Controller
         $status = $request->input('status');
 
         // Consultar trabajos con filtros
-            $works = $client->works()
-                ->when($search, fn($query) => $query->where('titulo', 'like', "%$search%"))
-                ->when($status, fn($query) => $query->where('estado', $status))
-                ->orderBy('created_at', 'desc')
-                ->paginate(5)
-                ->appends(['search' => $search, 'status' => $status]);
+        $works = $client->works()
+            ->when($search, fn($query) => $query->where('titulo', 'like', "%$search%"))
+            ->when($status, fn($query) => $query->where('estado', $status))
+            ->orderBy('created_at', 'desc')
+            ->paginate(5)
+            ->appends(['search' => $search, 'status' => $status]);
 
+        $notifications = Auth::user()
+            ->notifications()
+            ->latest()
+            ->take(5)
+            ->get(['id', 'mensaje', 'leido']);
 
         return Inertia::render('Client/Dashboard', [
-            'user' => $user->load('client'), // Carga la información del cliente junto al usuario
+            'user' => $user->load('client'),
+            'notifications' => $notifications,
             'works' => $client->works()->get()
         ]);
     }
@@ -44,19 +50,19 @@ class ClientController extends Controller
      * Muestra la vista de edición de perfil con Inertia.
      */
     public function editProfile()
-{
-    $user = Auth::user();
-    $client = $user->client;
+    {
+        $user = Auth::user();
+        $client = $user->client;
 
-    if (!$client) {
-        abort(403, 'No tienes acceso a esta sección.');
+        if (!$client) {
+            abort(403, 'No tienes acceso a esta sección.');
+        }
+
+        return Inertia::render('Client/Profile', [
+            'user' => $user,
+            'client' => $client
+        ]);
     }
-
-    return Inertia::render('Client/Profile', [
-        'user' => $user,
-        'client' => $client
-    ]);
-}
 
     /**
      * Actualiza el perfil del cliente.

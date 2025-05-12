@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-    <nav :class="show ? 'block' : 'hidden md:block'" class="bg-gray-800 text-white w-64 md:w-48 p-4">
+    <nav :class="show ? 'block' : 'hidden md:block'" class="bg-gray-800 text-white w-64 md:w-48 p-4 min-h-screen">
         <ul>
             <li><Link :href="route('client.dashboard')" class="block p-2 hover:bg-gray-700">📊 Panel de Control</Link></li>
             <li><Link :href="route('client.works')" class="block p-2 hover:bg-gray-700">📂 Trabajos</Link></li>
