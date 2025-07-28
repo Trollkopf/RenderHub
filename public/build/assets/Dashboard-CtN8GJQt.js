@@ -1,1 +1,0 @@
-import{A as e,o as a,g as r,b as n}from"./app-DqWAvktM.js";const i={__name:"Dashboard",setup(t){const o=e().props.auth.user;return a(()=>{o.role==="admin"?window.location.href=route("admin.dashboard"):window.location.href=route("client.dashboard")}),(s,d)=>(n(),r("div",null,"Cargando..."))}};export{i as default};

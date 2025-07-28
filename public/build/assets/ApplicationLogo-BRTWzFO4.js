@@ -1,0 +1,1 @@
+import{_ as o}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{g as e,b as r}from"./app-DeD_P_YC.js";const c={},n={src:"/renderhub_logo.png",alt:"logo RenderHub",class:"h-24 w-24"};function t(s,_){return r(),e("img",n)}const l=o(c,[["render",t]]);export{l as A};
