@@ -1,0 +1,709 @@
+{
+  "_ApplicationLogo-CPZwqrjn.js": {
+    "file": "assets/ApplicationLogo-CPZwqrjn.js",
+    "name": "ApplicationLogo",
+    "imports": [
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_GuestLayout-jF4JQeFN.js": {
+    "file": "assets/GuestLayout-jF4JQeFN.js",
+    "name": "GuestLayout",
+    "imports": [
+      "_ApplicationLogo-CPZwqrjn.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_PrimaryButton-DxkWpVFb.js": {
+    "file": "assets/PrimaryButton-DxkWpVFb.js",
+    "name": "PrimaryButton",
+    "imports": [
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_TextInput-BDTMQJbe.js": {
+    "file": "assets/TextInput-BDTMQJbe.js",
+    "name": "TextInput",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "__plugin-vue_export-helper-DlAUqK2U.js": {
+    "file": "assets/_plugin-vue_export-helper-DlAUqK2U.js",
+    "name": "_plugin-vue_export-helper"
+  },
+  "_index-DXZpKVQg.js": {
+    "file": "assets/index-DXZpKVQg.js",
+    "name": "index",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Admin/Admin.vue": {
+    "file": "assets/Admin-DwthQgva.js",
+    "name": "Admin",
+    "src": "resources/js/Pages/Admin/Admin.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/Pages/Admin/components/Header.vue",
+      "resources/js/Pages/Admin/components/Sidebar.vue",
+      "resources/js/app.js",
+      "_index-DXZpKVQg.js"
+    ]
+  },
+  "resources/js/Pages/Admin/Calendar.vue": {
+    "file": "assets/Calendar-SwCAP-Az.js",
+    "name": "Calendar",
+    "src": "resources/js/Pages/Admin/Calendar.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "resources/js/Pages/Admin/Admin.vue",
+      "resources/js/Pages/Admin/components/CalendarComponent.vue",
+      "resources/js/Pages/Admin/components/Header.vue",
+      "_index-DXZpKVQg.js",
+      "resources/js/Pages/Admin/components/Sidebar.vue",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Admin/ClientDetail.vue": {
+    "file": "assets/ClientDetail-8szL8pWl.js",
+    "name": "ClientDetail",
+    "src": "resources/js/Pages/Admin/ClientDetail.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/Pages/Admin/Admin.vue",
+      "resources/js/app.js",
+      "resources/js/Pages/Admin/components/Header.vue",
+      "_index-DXZpKVQg.js",
+      "resources/js/Pages/Admin/components/Sidebar.vue"
+    ]
+  },
+  "resources/js/Pages/Admin/Clients.vue": {
+    "file": "assets/Clients-CCTeHgNr.js",
+    "name": "Clients",
+    "src": "resources/js/Pages/Admin/Clients.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "resources/js/Pages/Admin/Admin.vue",
+      "resources/js/Pages/Admin/components/Header.vue",
+      "_index-DXZpKVQg.js",
+      "resources/js/Pages/Admin/components/Sidebar.vue"
+    ]
+  },
+  "resources/js/Pages/Admin/Dashboard.vue": {
+    "file": "assets/Dashboard-C84FL8Ra.js",
+    "name": "Dashboard",
+    "src": "resources/js/Pages/Admin/Dashboard.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/Pages/Admin/Admin.vue",
+      "resources/js/app.js",
+      "resources/js/Pages/Admin/components/Dashboard/StatsCard.vue",
+      "resources/js/Pages/Admin/components/Dashboard/LatestWorks.vue",
+      "resources/js/Pages/Admin/components/Dashboard/LatestClients.vue",
+      "resources/js/Pages/Admin/components/Dashboard/RecentNotifications.vue",
+      "resources/js/Pages/Admin/components/Header.vue",
+      "_index-DXZpKVQg.js",
+      "resources/js/Pages/Admin/components/Sidebar.vue"
+    ]
+  },
+  "resources/js/Pages/Admin/MyWorks.vue": {
+    "file": "assets/MyWorks-B7YTZxBE.js",
+    "name": "MyWorks",
+    "src": "resources/js/Pages/Admin/MyWorks.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/Pages/Admin/Admin.vue",
+      "resources/js/app.js",
+      "resources/js/Pages/Admin/components/Header.vue",
+      "_index-DXZpKVQg.js",
+      "resources/js/Pages/Admin/components/Sidebar.vue"
+    ]
+  },
+  "resources/js/Pages/Admin/Settings.vue": {
+    "file": "assets/Settings-wF-4WvKQ.js",
+    "name": "Settings",
+    "src": "resources/js/Pages/Admin/Settings.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/Pages/Admin/Admin.vue",
+      "resources/js/app.js",
+      "resources/js/Pages/Admin/Settings/AdminManagementModal.vue",
+      "resources/js/Pages/Admin/Settings/AutoArchiveModal.vue",
+      "resources/js/Pages/Admin/Settings/GeneralDocumentsModal.vue",
+      "resources/js/Pages/Admin/Settings/GlobalActionsModal.vue",
+      "resources/js/Pages/Admin/Settings/NotificationSettingsModal.vue",
+      "resources/js/Pages/Admin/Settings/ProfileSettingsModal.vue",
+      "resources/js/Pages/Admin/Settings/RequestLimitModal.vue",
+      "resources/js/Pages/Admin/Settings/SystemStatusModal.vue",
+      "resources/js/Pages/Admin/components/Header.vue",
+      "_index-DXZpKVQg.js",
+      "resources/js/Pages/Admin/components/Sidebar.vue"
+    ]
+  },
+  "resources/js/Pages/Admin/Settings/AdminManagementModal.vue": {
+    "file": "assets/AdminManagementModal-BGaiCr9t.js",
+    "name": "AdminManagementModal",
+    "src": "resources/js/Pages/Admin/Settings/AdminManagementModal.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Admin/Settings/AutoArchiveModal.vue": {
+    "file": "assets/AutoArchiveModal-Bs_jbjxt.js",
+    "name": "AutoArchiveModal",
+    "src": "resources/js/Pages/Admin/Settings/AutoArchiveModal.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Admin/Settings/GeneralDocumentsModal.vue": {
+    "file": "assets/GeneralDocumentsModal-Dv223W-P.js",
+    "name": "GeneralDocumentsModal",
+    "src": "resources/js/Pages/Admin/Settings/GeneralDocumentsModal.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Admin/Settings/GlobalActionsModal.vue": {
+    "file": "assets/GlobalActionsModal-D7o89gyd.js",
+    "name": "GlobalActionsModal",
+    "src": "resources/js/Pages/Admin/Settings/GlobalActionsModal.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Admin/Settings/NotificationSettingsModal.vue": {
+    "file": "assets/NotificationSettingsModal-CbD-j5RR.js",
+    "name": "NotificationSettingsModal",
+    "src": "resources/js/Pages/Admin/Settings/NotificationSettingsModal.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Admin/Settings/ProfileSettingsModal.vue": {
+    "file": "assets/ProfileSettingsModal-BII5siC3.js",
+    "name": "ProfileSettingsModal",
+    "src": "resources/js/Pages/Admin/Settings/ProfileSettingsModal.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Admin/Settings/RequestLimitModal.vue": {
+    "file": "assets/RequestLimitModal-u-Jc9XOi.js",
+    "name": "RequestLimitModal",
+    "src": "resources/js/Pages/Admin/Settings/RequestLimitModal.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Admin/Settings/SystemStatusModal.vue": {
+    "file": "assets/SystemStatusModal-yqn3b7gt.js",
+    "name": "SystemStatusModal",
+    "src": "resources/js/Pages/Admin/Settings/SystemStatusModal.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Admin/WorkDetail.vue": {
+    "file": "assets/WorkDetail-C_wWqgiq.js",
+    "name": "WorkDetail",
+    "src": "resources/js/Pages/Admin/WorkDetail.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "resources/js/Pages/Admin/Admin.vue",
+      "resources/js/Pages/Admin/components/Header.vue",
+      "_index-DXZpKVQg.js",
+      "resources/js/Pages/Admin/components/Sidebar.vue"
+    ]
+  },
+  "resources/js/Pages/Admin/Works.vue": {
+    "file": "assets/Works-DrvWLM7q.js",
+    "name": "Works",
+    "src": "resources/js/Pages/Admin/Works.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "resources/js/Pages/Admin/Admin.vue",
+      "resources/js/Pages/Admin/components/Header.vue",
+      "_index-DXZpKVQg.js",
+      "resources/js/Pages/Admin/components/Sidebar.vue"
+    ]
+  },
+  "resources/js/Pages/Admin/Works/Archived.vue": {
+    "file": "assets/Archived-HMt6tIxC.js",
+    "name": "Archived",
+    "src": "resources/js/Pages/Admin/Works/Archived.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/Pages/Admin/Admin.vue",
+      "resources/js/app.js",
+      "resources/js/Pages/Admin/components/Header.vue",
+      "_index-DXZpKVQg.js",
+      "resources/js/Pages/Admin/components/Sidebar.vue"
+    ]
+  },
+  "resources/js/Pages/Admin/components/CalendarComponent.vue": {
+    "file": "assets/CalendarComponent-BVMj6zqo.js",
+    "name": "CalendarComponent",
+    "src": "resources/js/Pages/Admin/components/CalendarComponent.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Admin/components/Dashboard/LatestClients.vue": {
+    "file": "assets/LatestClients-D_2iOtVk.js",
+    "name": "LatestClients",
+    "src": "resources/js/Pages/Admin/components/Dashboard/LatestClients.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Admin/components/Dashboard/LatestWorks.vue": {
+    "file": "assets/LatestWorks-3FpnfRoq.js",
+    "name": "LatestWorks",
+    "src": "resources/js/Pages/Admin/components/Dashboard/LatestWorks.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Admin/components/Dashboard/RecentNotifications.vue": {
+    "file": "assets/RecentNotifications-C5C74et3.js",
+    "name": "RecentNotifications",
+    "src": "resources/js/Pages/Admin/components/Dashboard/RecentNotifications.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Admin/components/Dashboard/StatsCard.vue": {
+    "file": "assets/StatsCard-B099SLKl.js",
+    "name": "StatsCard",
+    "src": "resources/js/Pages/Admin/components/Dashboard/StatsCard.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Admin/components/Header.vue": {
+    "file": "assets/Header-X6uiH6jU.js",
+    "name": "Header",
+    "src": "resources/js/Pages/Admin/components/Header.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_index-DXZpKVQg.js"
+    ]
+  },
+  "resources/js/Pages/Admin/components/Sidebar.vue": {
+    "file": "assets/Sidebar-Db8HPz_V.js",
+    "name": "Sidebar",
+    "src": "resources/js/Pages/Admin/components/Sidebar.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Auth/ConfirmPassword.vue": {
+    "file": "assets/ConfirmPassword-CoF2NT8w.js",
+    "name": "ConfirmPassword",
+    "src": "resources/js/Pages/Auth/ConfirmPassword.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_GuestLayout-jF4JQeFN.js",
+      "_TextInput-BDTMQJbe.js",
+      "_PrimaryButton-DxkWpVFb.js",
+      "_ApplicationLogo-CPZwqrjn.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Auth/ForgotPassword.vue": {
+    "file": "assets/ForgotPassword-C4KVUb_v.js",
+    "name": "ForgotPassword",
+    "src": "resources/js/Pages/Auth/ForgotPassword.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_GuestLayout-jF4JQeFN.js",
+      "_TextInput-BDTMQJbe.js",
+      "_PrimaryButton-DxkWpVFb.js",
+      "_ApplicationLogo-CPZwqrjn.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Auth/Login.vue": {
+    "file": "assets/Login-5Fu7ryZo.js",
+    "name": "Login",
+    "src": "resources/js/Pages/Auth/Login.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_GuestLayout-jF4JQeFN.js",
+      "_TextInput-BDTMQJbe.js",
+      "_PrimaryButton-DxkWpVFb.js",
+      "_ApplicationLogo-CPZwqrjn.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Auth/Register.vue": {
+    "file": "assets/Register-Dw9EhNY2.js",
+    "name": "Register",
+    "src": "resources/js/Pages/Auth/Register.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_GuestLayout-jF4JQeFN.js",
+      "_TextInput-BDTMQJbe.js",
+      "_PrimaryButton-DxkWpVFb.js",
+      "_ApplicationLogo-CPZwqrjn.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Auth/ResetPassword.vue": {
+    "file": "assets/ResetPassword-BOcRdigA.js",
+    "name": "ResetPassword",
+    "src": "resources/js/Pages/Auth/ResetPassword.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_GuestLayout-jF4JQeFN.js",
+      "_TextInput-BDTMQJbe.js",
+      "_PrimaryButton-DxkWpVFb.js",
+      "_ApplicationLogo-CPZwqrjn.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Auth/VerifyEmail.vue": {
+    "file": "assets/VerifyEmail-CddaFniz.js",
+    "name": "VerifyEmail",
+    "src": "resources/js/Pages/Auth/VerifyEmail.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_GuestLayout-jF4JQeFN.js",
+      "_PrimaryButton-DxkWpVFb.js",
+      "_ApplicationLogo-CPZwqrjn.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Client/Client.vue": {
+    "file": "assets/Client-DHgyBioL.js",
+    "name": "Client",
+    "src": "resources/js/Pages/Client/Client.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/Pages/Client/components/Header.vue",
+      "resources/js/Pages/Client/components/Sidebar.vue",
+      "resources/js/app.js",
+      "_index-DXZpKVQg.js"
+    ]
+  },
+  "resources/js/Pages/Client/Dashboard.vue": {
+    "file": "assets/Dashboard-DqjXNppS.js",
+    "name": "Dashboard",
+    "src": "resources/js/Pages/Client/Dashboard.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/Pages/Client/Client.vue",
+      "resources/js/app.js",
+      "resources/js/Pages/Client/components/UserInfo.vue",
+      "resources/js/Pages/Client/components/WorkList.vue",
+      "resources/js/Pages/Client/components/WorkNotifications.vue",
+      "resources/js/Pages/Client/components/Header.vue",
+      "_index-DXZpKVQg.js",
+      "resources/js/Pages/Client/components/Sidebar.vue"
+    ]
+  },
+  "resources/js/Pages/Client/Profile.vue": {
+    "file": "assets/Profile-c2M8kWrO.js",
+    "name": "Profile",
+    "src": "resources/js/Pages/Client/Profile.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "resources/js/Pages/Client/Client.vue",
+      "resources/js/Pages/Client/components/Header.vue",
+      "_index-DXZpKVQg.js",
+      "resources/js/Pages/Client/components/Sidebar.vue"
+    ]
+  },
+  "resources/js/Pages/Client/Works/Index.vue": {
+    "file": "assets/Index-C72PN4f4.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Client/Works/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/Pages/Client/Client.vue",
+      "resources/js/app.js",
+      "resources/js/Pages/Client/Works/components/WorkList.vue",
+      "resources/js/Pages/Client/Works/components/RequestWorkModal.vue",
+      "resources/js/Pages/Client/Works/components/ReviewWorkModal.vue",
+      "resources/js/Pages/Client/components/Header.vue",
+      "_index-DXZpKVQg.js",
+      "resources/js/Pages/Client/components/Sidebar.vue",
+      "resources/js/Pages/Client/Works/components/WorkCard.vue"
+    ]
+  },
+  "resources/js/Pages/Client/Works/Show.vue": {
+    "file": "assets/Show-D79Xf515.js",
+    "name": "Show",
+    "src": "resources/js/Pages/Client/Works/Show.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/Pages/Client/Client.vue",
+      "resources/js/app.js",
+      "resources/js/Pages/Client/components/Header.vue",
+      "_index-DXZpKVQg.js",
+      "resources/js/Pages/Client/components/Sidebar.vue"
+    ]
+  },
+  "resources/js/Pages/Client/Works/components/RequestWorkModal.vue": {
+    "file": "assets/RequestWorkModal-CrvCWmG0.js",
+    "name": "RequestWorkModal",
+    "src": "resources/js/Pages/Client/Works/components/RequestWorkModal.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Client/Works/components/ReviewWorkModal.vue": {
+    "file": "assets/ReviewWorkModal-BostUIyl.js",
+    "name": "ReviewWorkModal",
+    "src": "resources/js/Pages/Client/Works/components/ReviewWorkModal.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Client/Works/components/WorkCard.vue": {
+    "file": "assets/WorkCard-87112vij.js",
+    "name": "WorkCard",
+    "src": "resources/js/Pages/Client/Works/components/WorkCard.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Client/Works/components/WorkList.vue": {
+    "file": "assets/WorkList-aPdEaSjI.js",
+    "name": "WorkList",
+    "src": "resources/js/Pages/Client/Works/components/WorkList.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/Pages/Client/Works/components/WorkCard.vue",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Client/components/Header.vue": {
+    "file": "assets/Header-C2FZKzFL.js",
+    "name": "Header",
+    "src": "resources/js/Pages/Client/components/Header.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_index-DXZpKVQg.js"
+    ]
+  },
+  "resources/js/Pages/Client/components/Sidebar.vue": {
+    "file": "assets/Sidebar-Co1IhU-H.js",
+    "name": "Sidebar",
+    "src": "resources/js/Pages/Client/components/Sidebar.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Client/components/UserInfo.vue": {
+    "file": "assets/UserInfo-DLkN83aD.js",
+    "name": "UserInfo",
+    "src": "resources/js/Pages/Client/components/UserInfo.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Client/components/WorkList.vue": {
+    "file": "assets/WorkList-Cvf8MH56.js",
+    "name": "WorkList",
+    "src": "resources/js/Pages/Client/components/WorkList.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Client/components/WorkNotifications.vue": {
+    "file": "assets/WorkNotifications-a6jHpaqA.js",
+    "name": "WorkNotifications",
+    "src": "resources/js/Pages/Client/components/WorkNotifications.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Dashboard.vue": {
+    "file": "assets/Dashboard-CtN8GJQt.js",
+    "name": "Dashboard",
+    "src": "resources/js/Pages/Dashboard.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Notifications/Index.vue": {
+    "file": "assets/Index-Cj0ys_4k.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Notifications/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/Pages/Admin/Admin.vue",
+      "resources/js/Pages/Client/Client.vue",
+      "resources/js/app.js",
+      "resources/js/Pages/Admin/components/Header.vue",
+      "_index-DXZpKVQg.js",
+      "resources/js/Pages/Admin/components/Sidebar.vue",
+      "resources/js/Pages/Client/components/Header.vue",
+      "resources/js/Pages/Client/components/Sidebar.vue"
+    ]
+  },
+  "resources/js/Pages/Profile/Edit.vue": {
+    "file": "assets/Edit-a3fljRTi.js",
+    "name": "Edit",
+    "src": "resources/js/Pages/Profile/Edit.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_ApplicationLogo-CPZwqrjn.js",
+      "resources/js/app.js",
+      "resources/js/Pages/Profile/Partials/DeleteUserForm.vue",
+      "resources/js/Pages/Profile/Partials/UpdatePasswordForm.vue",
+      "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.vue",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_TextInput-BDTMQJbe.js",
+      "_PrimaryButton-DxkWpVFb.js"
+    ]
+  },
+  "resources/js/Pages/Profile/Partials/DeleteUserForm.vue": {
+    "file": "assets/DeleteUserForm-BlMckIsE.js",
+    "name": "DeleteUserForm",
+    "src": "resources/js/Pages/Profile/Partials/DeleteUserForm.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_TextInput-BDTMQJbe.js"
+    ]
+  },
+  "resources/js/Pages/Profile/Partials/UpdatePasswordForm.vue": {
+    "file": "assets/UpdatePasswordForm-BNtLEQ2a.js",
+    "name": "UpdatePasswordForm",
+    "src": "resources/js/Pages/Profile/Partials/UpdatePasswordForm.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_TextInput-BDTMQJbe.js",
+      "_PrimaryButton-DxkWpVFb.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.vue": {
+    "file": "assets/UpdateProfileInformationForm-CUDZAH7E.js",
+    "name": "UpdateProfileInformationForm",
+    "src": "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_TextInput-BDTMQJbe.js",
+      "_PrimaryButton-DxkWpVFb.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Welcome.vue": {
+    "file": "assets/Welcome-Ba6Po2iW.js",
+    "name": "Welcome",
+    "src": "resources/js/Pages/Welcome.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-DqWAvktM.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/Pages/Admin/Admin.vue",
+      "resources/js/Pages/Admin/Calendar.vue",
+      "resources/js/Pages/Admin/ClientDetail.vue",
+      "resources/js/Pages/Admin/Clients.vue",
+      "resources/js/Pages/Admin/Dashboard.vue",
+      "resources/js/Pages/Admin/MyWorks.vue",
+      "resources/js/Pages/Admin/Settings.vue",
+      "resources/js/Pages/Admin/Settings/AdminManagementModal.vue",
+      "resources/js/Pages/Admin/Settings/AutoArchiveModal.vue",
+      "resources/js/Pages/Admin/Settings/GeneralDocumentsModal.vue",
+      "resources/js/Pages/Admin/Settings/GlobalActionsModal.vue",
+      "resources/js/Pages/Admin/Settings/NotificationSettingsModal.vue",
+      "resources/js/Pages/Admin/Settings/ProfileSettingsModal.vue",
+      "resources/js/Pages/Admin/Settings/RequestLimitModal.vue",
+      "resources/js/Pages/Admin/Settings/SystemStatusModal.vue",
+      "resources/js/Pages/Admin/WorkDetail.vue",
+      "resources/js/Pages/Admin/Works.vue",
+      "resources/js/Pages/Admin/Works/Archived.vue",
+      "resources/js/Pages/Admin/components/CalendarComponent.vue",
+      "resources/js/Pages/Admin/components/Dashboard/LatestClients.vue",
+      "resources/js/Pages/Admin/components/Dashboard/LatestWorks.vue",
+      "resources/js/Pages/Admin/components/Dashboard/RecentNotifications.vue",
+      "resources/js/Pages/Admin/components/Dashboard/StatsCard.vue",
+      "resources/js/Pages/Admin/components/Header.vue",
+      "resources/js/Pages/Admin/components/Sidebar.vue",
+      "resources/js/Pages/Auth/ConfirmPassword.vue",
+      "resources/js/Pages/Auth/ForgotPassword.vue",
+      "resources/js/Pages/Auth/Login.vue",
+      "resources/js/Pages/Auth/Register.vue",
+      "resources/js/Pages/Auth/ResetPassword.vue",
+      "resources/js/Pages/Auth/VerifyEmail.vue",
+      "resources/js/Pages/Client/Client.vue",
+      "resources/js/Pages/Client/Dashboard.vue",
+      "resources/js/Pages/Client/Profile.vue",
+      "resources/js/Pages/Client/Works/Index.vue",
+      "resources/js/Pages/Client/Works/Show.vue",
+      "resources/js/Pages/Client/Works/components/RequestWorkModal.vue",
+      "resources/js/Pages/Client/Works/components/ReviewWorkModal.vue",
+      "resources/js/Pages/Client/Works/components/WorkCard.vue",
+      "resources/js/Pages/Client/Works/components/WorkList.vue",
+      "resources/js/Pages/Client/components/Header.vue",
+      "resources/js/Pages/Client/components/Sidebar.vue",
+      "resources/js/Pages/Client/components/UserInfo.vue",
+      "resources/js/Pages/Client/components/WorkList.vue",
+      "resources/js/Pages/Client/components/WorkNotifications.vue",
+      "resources/js/Pages/Dashboard.vue",
+      "resources/js/Pages/Notifications/Index.vue",
+      "resources/js/Pages/Profile/Edit.vue",
+      "resources/js/Pages/Profile/Partials/DeleteUserForm.vue",
+      "resources/js/Pages/Profile/Partials/UpdatePasswordForm.vue",
+      "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.vue",
+      "resources/js/Pages/Welcome.vue"
+    ],
+    "css": [
+      "assets/app-jHrPIqU7.css"
+    ]
+  }
+}
